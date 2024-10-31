@@ -17,25 +17,33 @@ cancelbutton.addEventListener('click', function() {
 
 function addTask(e) {
     e.preventDefault();
-    let title = document.getElementById("title").value;
-    let description = document.getElementById("description").value;
-    let status = document.getElementById("status").value;
+    // let title = document.getElementById("title").value;
+    // let description = document.getElementById("description").value;
+    // let status = document.getElementById("status").value;
     // let deuDate = document.getElementById("deuDate").value;
-    let priority = document.getElementById("priority").value;
+    // let priority = document.getElementById("priority").value;
 
+    const task = {
+        title : document.getElementById("title").value,
+        description : document.getElementById("description").value ,
+        status : document.getElementById("status").value,
+        // deuDate : document.getElementById("deuDate").value,
+        priority : document.getElementById("priority").value
+    };
+    
     const taskDiv = document.createElement("div");
 
     // this is to style the the task cars depending on its priority 
-    if(priority == "P1"){
+    if(task.priority == "P1"){
         taskDiv.classList.add("flex", "border-2", "border-red-500", "my-2", "P1","p-2");    
-    } else if(priority == "P2"){
+    } else if(task.priority == "P2"){
         taskDiv.classList.add("flex", "border-2", "border-orange-500","P2", "my-2", "p-2");    
-    } else if(priority == "P3"){
+    } else if(task.priority == "P3"){
         taskDiv.classList.add("flex", "border-2", "border-yellow-500","P3", "my-2", "p-2");
     }
 
     const liTask = document.createElement("li");
-    liTask.innerText = title;
+    liTask.innerText = task.title;
     liTask.classList.add("flex-1");
     taskDiv.appendChild(liTask);
     
@@ -46,35 +54,33 @@ function addTask(e) {
     const editBtn = document.createElement("button");
     editBtn.innerHTML = '<i class="fa-solid ml-3 text-teal-500 fa-pen-to-square"></i>';
     taskDiv.appendChild(editBtn); 
-    console.log("status" , status);
 
     // this is to add the task in the propre place [to do list , in progress , diong ]
 
-    if( status== "to-do"){
+    if( task.status== "to-do"){
         todolist.appendChild(taskDiv);
-    } else if( status== "doing"){
+    } else if( task.status== "doing"){
         inProgress.appendChild(taskDiv);
-    } else if( status== "done"){
+    } else if( task.status== "done"){
         doneList.appendChild(taskDiv);
     }
-
-
-    //  this is to make the edit button shows the details when we click it 
-
-    editBtn.addEventListener('click', function(){
-        let title = document.getElementById("title").value;
-        let description = document.getElementById("description").value;
-        let status = document.getElementById("status").value;
-        // let deuDate = document.getElementById("deuDate").value;
-        let priority = document.getElementById("priority").value;
-        taskModal.classList.remove("hidden")
-    });
 
 
     // this is for the delete button to remove the task 
 
     deleteBtn.addEventListener("click", function() {
         taskDiv.remove();
+    });
+
+    //  this is to make the edit button shows the details when we click it 
+
+    editBtn.addEventListener('click', function(){
+    document.getElementById("title").value = task.title;
+    document.getElementById("description").value  = task.description;
+    document.getElementById("status").value = task.status;
+    document.getElementById("priority").value = task.priority;
+    taskDiv.remove();
+    taskModal.classList.remove("hidden")
     });
 
     //  this is to hide the form after clicking save
