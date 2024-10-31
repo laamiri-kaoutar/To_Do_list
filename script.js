@@ -24,6 +24,8 @@ function addTask(e) {
     let priority = document.getElementById("priority").value;
 
     const taskDiv = document.createElement("div");
+
+    // this is to style the the task cars depending on its priority 
     if(priority == "P1"){
         taskDiv.classList.add("flex", "border-2", "border-red-500", "my-2", "P1","p-2");    
     } else if(priority == "P2"){
@@ -37,19 +39,16 @@ function addTask(e) {
     liTask.classList.add("flex-1");
     taskDiv.appendChild(liTask);
     
-
     const deleteBtn = document.createElement("button");
     deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can text-red-500"></i>';
     taskDiv.appendChild(deleteBtn); 
-
-    deleteBtn.addEventListener("click", function() {
-        taskDiv.remove();
-    });
 
     const editBtn = document.createElement("button");
     editBtn.innerHTML = '<i class="fa-solid ml-3 text-teal-500 fa-pen-to-square"></i>';
     taskDiv.appendChild(editBtn); 
     console.log("status" , status);
+
+    // this is to add the task in the propre place [to do list , in progress , diong ]
 
     if( status== "to-do"){
         todolist.appendChild(taskDiv);
@@ -59,7 +58,29 @@ function addTask(e) {
         doneList.appendChild(taskDiv);
     }
 
+
+    //  this is to make the edit button shows the details when we click it 
+
+    editBtn.addEventListener('click', function(){
+        let title = document.getElementById("title").value;
+        let description = document.getElementById("description").value;
+        let status = document.getElementById("status").value;
+        // let deuDate = document.getElementById("deuDate").value;
+        let priority = document.getElementById("priority").value;
+        taskModal.classList.remove("hidden")
+    });
+
+
+    // this is for the delete button to remove the task 
+
+    deleteBtn.addEventListener("click", function() {
+        taskDiv.remove();
+    });
+
+    //  this is to hide the form after clicking save
     taskModal.classList.add("hidden");
+
+    // this is to empty the forme because it shows with the content of the last task added
 
      document.getElementById("title").value = "";
      document.getElementById("description").value = "";
