@@ -36,12 +36,15 @@ function addTask(e) {
     liTask.innerText = title;
     liTask.classList.add("flex-1");
     taskDiv.appendChild(liTask);
-    console.log(liTask);
     
 
     const deleteBtn = document.createElement("button");
     deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can text-red-500"></i>';
     taskDiv.appendChild(deleteBtn); 
+
+    deleteBtn.addEventListener("click", function() {
+        taskDiv.remove();
+    });
 
     const editBtn = document.createElement("button");
     editBtn.innerHTML = '<i class="fa-solid ml-3 text-teal-500 fa-pen-to-square"></i>';
