@@ -5,32 +5,31 @@ const saveBtn = document.getElementById("saveTask")
 const todolist = document.getElementById("todo-list");
 const inProgress = document.getElementById("in-progress-list");
 const doneList = document.getElementById("done-list");
+const updateBtn = document.getElementById("editTask")
 
 addButton.addEventListener('click', function() {
     taskModal.classList.remove("hidden")
 });
 
-cancelbutton.addEventListener('click', function() {
+cancelbutton.addEventListener('click', function(e) {
+    e.preventDefault();
     taskModal.classList.add("hidden");
 });
  saveBtn.addEventListener("click" ,addTask);
+let tasks = [];
 
-function addTask(e) {
+
+function addTask(e ) {
     e.preventDefault();
-    // let title = document.getElementById("title").value;
-    // let description = document.getElementById("description").value;
-    // let status = document.getElementById("status").value;
-    // let deuDate = document.getElementById("deuDate").value;
-    // let priority = document.getElementById("priority").value;
 
-    const task = {
+    let task = {
+        id : Date.now(),
         title : document.getElementById("title").value,
         description : document.getElementById("description").value ,
         status : document.getElementById("status").value,
         // deuDate : document.getElementById("deuDate").value,
         priority : document.getElementById("priority").value
     };
-    
     const taskDiv = document.createElement("div");
 
     // this is to style the the task cars depending on its priority 
@@ -65,24 +64,35 @@ function addTask(e) {
         doneList.appendChild(taskDiv);
     }
 
-
     // this is for the delete button to remove the task 
-
-    deleteBtn.addEventListener("click", function() {
+    deleteBtn.addEventListener("click", function deleteTask() {
         taskDiv.remove();
     });
 
     //  this is to make the edit button shows the details when we click it 
 
-    editBtn.addEventListener('click', function(){
-    document.getElementById("title").value = task.title;
-    document.getElementById("description").value  = task.description;
-    document.getElementById("status").value = task.status;
-    document.getElementById("priority").value = task.priority;
-    taskDiv.remove();
-    taskModal.classList.remove("hidden")
-    });
+    editBtn.addEventListener('click',function edit (e){
+        e.preventDefault();
+        document.getElementById("title").value = task.title;
+        document.getElementById("description").value = task.description;
+        document.getElementById("status").value = task.status;
+        document.getElementById("priority").value = task.priority;
+        updateBtn.classList.remove("hidden")
+        taskModal.classList.remove("hidden")
+        saveBtn.classList.add("hidden")
 
+    });
+    updateBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        task.title = document.getElementById("title").value 
+        task.description = document.getElementById("description").value 
+        task.status = document.getElementById("status").value
+        task.priority = document.getElementById("priority").value
+        console.log(task.title );
+        liTask.innerText = task.title;
+        
+    } )
     //  this is to hide the form after clicking save
     taskModal.classList.add("hidden");
 
@@ -96,3 +106,9 @@ function addTask(e) {
      console.log(document.getElementById("deuDate"));
 
 } 
+
+// function deleteTask(e) {
+
+//     taskDiv.remove();
+// }
+
