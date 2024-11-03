@@ -50,6 +50,7 @@
                 <textarea id="description" class="border-2 border-purple-300 rounded w-full p-2 mb-4" required></textarea>
                 <label for="status" class="text-sm">statut:</label>
                 <select id="status" class="border-2 border-purple-300 rounded w-full p-2 mb-4" required>
+                    <option value="" disabled selected>Select a status</option>
                     <option value="to-do">To Do</option>
                     <option value="doing">Doing</option>
                     <option value="done">Done</option>
@@ -60,11 +61,12 @@
               
                 <label for="priority" class="text-sm">priority:</label>
                 <select id="priority" class="border-2 border-purple-300 rounded w-full p-2 mb-4" required>
+                    <option value="" disabled selected>Select priority</option>
                     <option value="P1" class="bg-red-500">P1</option>
                     <option value="P2" class="bg-orange-500">P2</option>
                     <option value="P3" class="bg-yellow-500">P3</option>
                 </select>
-                
+
                 <button type="submit" id="saveTask" class="bg-purple-600 text-white px-4 py-1 rounded">Add task</button>
                 <button type="submit" id="editTask" class="bg-purple-600 text-white px-4 py-1 rounded hidden">Edit task</button>
                 <button id="cancelbutton" class=" bg-yellow-400 text-white px-2 py-1 rounded">cancel</button>
