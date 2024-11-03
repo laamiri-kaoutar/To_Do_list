@@ -6,7 +6,13 @@ const todolist = document.getElementById("todo-list");
 const inProgress = document.getElementById("in-progress-list");
 const doneList = document.getElementById("done-list");
 const updateBtn = document.getElementById("editTask")
+const todoCount = document.getElementById("todoCount")
+const doingCount = document.getElementById("doingCount")
+const doneCount = document.getElementById("doneCount")
+
+
 let tasks = [];
+let currentEditingTaskId = null;
 
 addButton.addEventListener('click', function() {
     taskModal.classList.remove("hidden")
@@ -17,6 +23,8 @@ cancelbutton.addEventListener('click', function(e) {
     taskModal.classList.add("hidden");
 });
  saveBtn.addEventListener("click" ,addTask);
+
+updateBtn.addEventListener("click", update); // Set update listener once
 
 
 function addTask(e ) {
@@ -36,14 +44,14 @@ function addTask(e ) {
         dueDate : document.getElementById("dueDate").value,
         priority : document.getElementById("priority").value
     };
-    
 
+    tasks.push(task)
+
+    updateCounts();
     const taskDiv = document.createElement("div");
+    taskDiv.id = task.id;
 
     const liTask = document.createElement("li");
-    // liTask.innerText = task.title;
-    // liTask.classList.add("flex-1");
-    // taskDiv.appendChild(liTask);
     liTask.classList.add("flex-1","flex", "flex-col", "p-2");
 
     // this is for title element
@@ -73,13 +81,14 @@ function addTask(e ) {
 
     // this is for the delete button to remove the task 
     deleteBtn.addEventListener("click", function  deleteTask () {
+
+        deleteTaskById(task.id);
+        updateCounts();
         taskDiv.remove();
     });
 
     //  this is to make the edit button shows the details when we click it 
     editBtn.addEventListener('click',(e)=>{ edit (e,task) });
-    updateBtn.addEventListener("click",(e)=>{ update(e,task,titleElement,dueDateElement,taskDiv)});
-
     //  this is to hide the form after clicking save
     taskModal.classList.add("hidden");
 
@@ -87,22 +96,6 @@ function addTask(e ) {
     empty();
 } 
 
-// function deleteTask(e ,taskDiv) {
-//     e.preventDefault();
-//     taskDiv.classList.add("fall");
-//     console.log("Fall class added");
-//     taskDiv.addEventListener("transitionend", function(){
-//         console.log("holla")
-//         taskDiv.remove();
-//         console.log("holla")
-//     })
-
-//     taskDiv.addEventListener("webkitTransitionEnd", function() {
-//         console.log("holla")
-//         taskDiv.remove();
-//         console.log("holla")
-//     });
-// }
 
 function edit (e,task){
     e.preventDefault();
@@ -112,30 +105,46 @@ function edit (e,task){
     document.getElementById("priority").value = task.priority;
     document.getElementById("dueDate").value = task.dueDate;
 
+    currentEditingTaskId = task.id;
     updateBtn.classList.remove("hidden")
     taskModal.classList.remove("hidden")
     saveBtn.classList.add("hidden")
 
 }
 
-function update(e,task,titleElement,dueDateElement,taskDiv) {
+function update(e) {
     e.preventDefault();
 
-    task.title = document.getElementById("title").value 
-    task.description = document.getElementById("description").value 
-    task.status = document.getElementById("status").value
-    task.priority = document.getElementById("priority").value
-    task.dueDate = document.getElementById("dueDate").value
-    console.log(task.title );
-    dueDateElement.innerText = `Due: ${task.dueDate}`;
-    titleElement.innerText = task.title;
+    const index = tasks.findIndex(task => task.id === currentEditingTaskId);
+
+    tasks[index].title = document.getElementById("title").value 
+    tasks[index].description = document.getElementById("description").value 
+    tasks[index].status = document.getElementById("status").value
+    tasks[index].priority = document.getElementById("priority").value
+    tasks[index].dueDate = document.getElementById("dueDate").value
+    console.log(tasks[index].title );
+
+    const parentDiv = document.getElementById(currentEditingTaskId)
+
+    const liElement = parentDiv.querySelector('li');
+ 
+    const spans = liElement.getElementsByTagName('span');
+    const titleSpan = spans[0];
+    const dueDateSpan = spans[1];
+
+    dueDateSpan.innerText = `Due: ${tasks[index].dueDate}`;
+    titleSpan.innerText = tasks[index].title;
 
 
-    styleBasedPriority(task,taskDiv);
-    positionBasedStatus(task,taskDiv);
+    styleBasedPriority(tasks[index],parentDiv);
+    positionBasedStatus(tasks[index],parentDiv);
+
+    // this is to update the counter of each list after the updat
+
+    updateCounts();
 
 
-    //  this is to hide the form after clicking save
+    //  this is to hide the form  and edit button and show the save button after clicking save
     updateBtn.classList.add("hidden")
     taskModal.classList.add("hidden")
     saveBtn.classList.remove("hidden")
@@ -174,4 +183,57 @@ function empty(){
     }
 
  }
+
+ function todoStatics(){
+    let count=0;
+    // for (let i = 0; i < tasks.length; i++) {
+    //     if (tasks[i].status== "to-do" ) {
+    //         count++;
+    //     } 
+    // }
+    
+    tasks.forEach(task => {
+        if (task.status === "to-do") {
+            count++;
+        }
+    });
+    return count;
+ }
+
+ function diongStatics(){
+    let count=0;
+    tasks.forEach(task => {
+        if (task.status === "doing") {
+            count++;
+        }
+    });
+    return count;
+ }
+ function doneStatics(){
+    let count=0;
+    tasks.forEach(task => {
+        if (task.status === "done") {
+            count++;
+        }
+    });
+    return count;
+ }
+
+
+ function deleteTaskById(taskId) {
+    // find the index of the task by id
+    const index = tasks.findIndex(task => task.id === taskId);
+
+    if (index !== -1) {
+
+        tasks.splice(index, 1);
+
+    } 
+}
+
+function updateCounts() {
+    todoCount.innerText = todoStatics();
+    doingCount.innerText = diongStatics();
+    doneCount.innerText = doneStatics();
+}
 
