@@ -35,8 +35,23 @@ function addTask(e ) {
     const taskDiv = document.createElement("div");
 
     const liTask = document.createElement("li");
-    liTask.innerText = task.title;
-    liTask.classList.add("flex-1");
+    // liTask.innerText = task.title;
+    // liTask.classList.add("flex-1");
+    // taskDiv.appendChild(liTask);
+    liTask.classList.add("flex-1","flex", "flex-col", "p-2");
+
+    // this is for title element
+    const titleElement = document.createElement("span");
+    titleElement.innerText = task.title;
+    titleElement.classList.add("font-bold", "text-lg"); // Tailwind classes for styling
+    liTask.appendChild(titleElement);
+
+    // this is for  due date element
+    const dueDateElement = document.createElement("span");
+    dueDateElement.innerText = `Due: ${task.dueDate}`;
+    dueDateElement.classList.add("text-gray-600", "text-sm", "mt-1"); // Tailwind classes for styling
+    liTask.appendChild(dueDateElement);
+
     taskDiv.appendChild(liTask);
     
     const deleteBtn = document.createElement("button");
@@ -57,7 +72,7 @@ function addTask(e ) {
 
     //  this is to make the edit button shows the details when we click it 
     editBtn.addEventListener('click',(e)=>{ edit (e,task) });
-    updateBtn.addEventListener("click",(e)=>{ update(e,task,liTask,taskDiv)});
+    updateBtn.addEventListener("click",(e)=>{ update(e,task,titleElement,dueDateElement,taskDiv)});
 
     //  this is to hide the form after clicking save
     taskModal.classList.add("hidden");
@@ -97,7 +112,7 @@ function edit (e,task){
 
 }
 
-function update(e,task,liTask,taskDiv) {
+function update(e,task,titleElement,dueDateElement,taskDiv) {
     e.preventDefault();
 
     task.title = document.getElementById("title").value 
@@ -106,7 +121,8 @@ function update(e,task,liTask,taskDiv) {
     task.priority = document.getElementById("priority").value
     task.dueDate = document.getElementById("dueDate").value
     console.log(task.title );
-    liTask.innerText = task.title;
+    dueDateElement.innerText = `Due: ${task.dueDate}`;
+    titleElement.innerText = task.title;
 
 
     styleBasedPriority(task,taskDiv);
@@ -153,19 +169,3 @@ function empty(){
 
  }
 
-
-     // if(task.priority == "P1"){
-    //     taskDiv.classList.add("flex", "border-2", "border-red-500", "my-2", "P1","p-2");    
-    // } else if(task.priority == "P2"){
-    //     taskDiv.classList.add("flex", "border-2", "border-orange-500","P2", "my-2", "p-2");    
-    // } else if(task.priority == "P3"){
-    //     taskDiv.classList.add("flex", "border-2", "border-yellow-500","P3", "my-2", "p-2");
-    // }
-
-    // if( task.status== "to-do"){
-    //     todolist.appendChild(taskDiv);
-    // } else if( task.status== "doing"){
-    //     inProgress.appendChild(taskDiv);
-    // } else if( task.status== "done"){
-    //     doneList.appendChild(taskDiv);
-    // }
