@@ -4,10 +4,11 @@
 .P2 {
     background: linear-gradient(to bottom, #fda52a 5%, white 20% ); 
 }
-
 .P3 {
     background: linear-gradient(to bottom, #ffd64e 5%, white 20%); 
 }
+
+
 #priority:focus {
     background-color: transparent; 
 }
