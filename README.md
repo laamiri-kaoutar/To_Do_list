@@ -33,6 +33,6 @@ The Task Management Application, developed for Codeshungum, is designed to enhan
 
 - **Project Planning**: [GitHub Project](https://github.com/users/laamiri-kaoutar/projects/5)
 - **Hosted Site**: [Site web](https://laamiri-kaoutar.github.io/To_Do_list/)
-- **Project Presentation**: [Presentation Link](https://www.canva.com/design/DAGVclunyBQ/CpyCgavR5BvZL62UIsZxog/edit?utm_content=DAGVclunyBQ&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+- **Project Presentation**: [Presentation Link](https://www.canva.com/design/DAGVcgFElZ0/AAgMTh1HbWZ78yP_JYmLnQ/edit?utm_content=DAGVcgFElZ0&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
 
